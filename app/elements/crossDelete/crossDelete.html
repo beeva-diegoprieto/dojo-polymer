@@ -1,0 +1,40 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module name="cross-delete">
+  <template>
+    <button id_wine="{{id_wine}}">delete</button>
+  </template>
+  <script>
+    Polymer({
+
+      is:'cross-delete',
+
+      ready: function()
+      {
+        this.$.id_wine = this.id_wine;
+      },
+
+      listeners:{
+        tap: 'deleteWine'
+      },
+      properties: {
+        id_wine: {
+          observer: '_srcChanged',
+          type: String,
+          value: ''
+        }
+    },
+
+      deleteWine: function()
+      {
+        //alert(this.$.id_wine);
+        var vino = new Firebase('https://vinos.firebaseio.com/lista_vinos/'+this.$.id_wine);
+        vino.remove();
+      }
+
+
+    });
+  </script>
+</dom-module>
+
+

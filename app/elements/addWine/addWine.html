@@ -1,0 +1,41 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+
+<dom-module name="add-wine">
+  <template>
+
+    <form is="iron-form" id="wineform">
+
+      <h2 class="page-title">
+        Añade otro vino
+      </h2>
+
+      <span>Datos del vino</span>
+      <paper-input label="Nombre"  bind-value="{{nombre}}"></paper-input>
+      <paper-input label="Bodega"  bind-value="{{bodega}}"></paper-input>
+      <paper-input label="Tipo"  bind-value="{{tipo}}"></paper-input>
+      <paper-input label="Añada"  bind-value="{{añada}}"></paper-input>
+      <paper-input label="Precio"  bind-value="{{precio}}"></paper-input>
+      <paper-input label="Foto"  bind-value="{{img}}"></paper-input>
+      <paper-button raised on-click="addWine">Añadir vino</paper-button>
+
+    </form>
+
+  </template>
+  <script>
+    Polymer({
+
+      is: 'add-wine',
+
+      addWine: function () {
+
+        var vino = new Firebase('https://vinos.firebaseio.com/lista_vinos/');
+        vino.push({'nombre': this.nombre, 'bodega':this.bodega,'tipo': this.tipo,'añada':this.añada,'precio':this.precio,'img':this.img});
+
+        document.location.href="/vinos";
+
+      }
+    });
+  </script>
+
+</dom-module>

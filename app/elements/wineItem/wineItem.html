@@ -1,0 +1,61 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module name="wine-item">
+
+
+  <template is="dom-bind">
+
+    <firebase-document
+      location={{url}}
+      data="{{vino}}">
+    </firebase-document>
+
+
+
+    <!-- <firebase-document
+      location="https://vinos.firebaseio.com/lista_vinos/-K1_f9O6adnCyUxi6LZs"
+      data="{{vino}}">
+    </firebase-document>
+
+
+     <paper-material elevation="1">
+          <h2 style="width: 100%; text-align: right">
+            <span>{{vino.nombre}}</span>
+          </h2>
+          <div>
+            <iron-image src={{vino.img}}></iron-image>
+          </div>
+          <div>
+            Tipo: <span>{{vino.tipo}}</span></span>
+            Bodega: <span>{{vino.bodega}}</span>
+            Añada: <span>{{vinos.0.value}}</span>
+            Precio: <span>{{vino.precio}}</span>€
+          </div>
+          <cross-delete id_wine={{vino.__firebaseKey__}}></cross-delete>
+      </paper-material>-->
+    </template>
+  <script>
+    Polymer({
+
+      is:'wine-item',
+
+      properties:{
+        url:String,
+      },
+
+      ready: function()
+      {
+        this.async(function () {
+          this.url="https://vinos.firebaseio.com/lista_vinos/"+this.id_wine;
+        }, 50);
+      },
+
+      log: function(msg)
+      {
+        console.log(msg)
+      }
+
+
+    });
+  </script>
+</dom-module>

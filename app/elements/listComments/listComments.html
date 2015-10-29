@@ -1,0 +1,36 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module name="list-comments">
+
+
+  <template is="dom-bind">
+    <firebase-collection
+      location={{url}}
+      data="{{reviews}}"></firebase-collection>
+    <template is="dom-repeat" items="{{reviews}}" as="review">
+      <paper-material elevation="1">
+        <span>{{review.date}}</span>
+        <span>{{review.msg}}</span>
+      </paper-material>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'list-comments',
+
+      properties: {
+        url: String,
+      },
+
+      ready: function () {
+        this.async(function () {
+          this.url = "https://vinos.firebaseio.com/lista_vinos/" + this.id_wine + "/reviews";
+        }, 50);
+      }
+    });
+  </script>
+
+
+</dom-module>

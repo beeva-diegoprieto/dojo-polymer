@@ -1,0 +1,20 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module name="wine-item-list">
+  <template>
+    <a href={{url}}><span>{{name_wine}}</span></a>
+  </template>
+  <script>
+    Polymer({
+
+      is:'wine-item-list',
+
+      ready: function()
+      {
+        this.url ="/vinos/"+this.id_wine;
+      }
+    });
+  </script>
+</dom-module>
+
+
