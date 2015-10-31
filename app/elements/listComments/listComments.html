@@ -2,15 +2,46 @@
 
 <dom-module name="list-comments">
 
+  <style is="custom-style">
+
+    paper-button {
+      display: block;
+      font-size: 10px;
+      text-transform: none;
+    }
+    paper-button.colorful {
+      color: #4285f4;
+    }
+    paper-button.red {
+      color: var(--paper-red-500);
+      --paper-button-flat-focus-color: var(--paper-red-50);
+    }
+
+    paper-button.hover:hover {
+      background: #eee;
+    }
+  </style>
+
 
   <template is="dom-bind">
+    <h3>Reseñas del vino</h3>
     <firebase-collection
       location={{url}}
       data="{{reviews}}"></firebase-collection>
     <template is="dom-repeat" items="{{reviews}}" as="review">
       <paper-material elevation="1">
-        <span>{{review.date}}</span>
-        <span>{{review.msg}}</span>
+        <paper-icon-item>
+          <div class="avatar" item-icon style="text-align: center;margin-top: 10px">
+            <span>Nota<br>{{review.mark}}</span>
+          </div>
+          <paper-item-body two-line>
+            <div secondary>{{review.date}}</div>
+            <div>{{review.msg}}</div>
+          </paper-item-body>
+          <paper-button class="red" on-click="deleteReview" id_comment="sad">
+            <iron-icon icon="remove-circle"></iron-icon>
+          </paper-button>
+        </paper-icon-item>
       </paper-material>
     </template>
   </template>
@@ -28,7 +59,14 @@
         this.async(function () {
           this.url = "https://vinos.firebaseio.com/lista_vinos/" + this.id_wine + "/reviews";
         }, 50);
+      },
+
+      deleteReview: function(event)
+      {
+        var review = new Firebase('https://vinos.firebaseio.com/lista_vinos/'+this.id_wine+'/reviews/'+event.model._aboveConfig.review.__firebaseKey__);
+        review.remove();
       }
+
     });
   </script>
 
