@@ -3,59 +3,60 @@
 <dom-module name="wine-item">
 
 
-  <template is="dom-bind">
+    <template>
+        <paper-card id="heading" class="pink">
+            <div class="card-content">
+                <iron-image id="img"></iron-image>
+                <p>Tipo: <span id="tipo"></span><br>
+                    Bodega: <span id="bodega"></span><br>
+                    Añada: <span id="añada"></span><br>
+                    Precio: <span id="precio"></span>€
+                </p>
+            </div>
+            <div class="card-actions">
+                <paper-button on-click="deleteWine">No</paper-button>
+            </div>
+        </paper-card>
 
-    <firebase-document
-      location={{url}}
-      data="{{vino}}">
-    </firebase-document>
 
-
-
-    <!-- <firebase-document
-      location="https://vinos.firebaseio.com/lista_vinos/-K1_f9O6adnCyUxi6LZs"
-      data="{{vino}}">
-    </firebase-document>
-
-
-     <paper-material elevation="1">
-          <h2 style="width: 100%; text-align: right">
-            <span>{{vino.nombre}}</span>
-          </h2>
-          <div>
-            <iron-image src={{vino.img}}></iron-image>
-          </div>
-          <div>
-            Tipo: <span>{{vino.tipo}}</span></span>
-            Bodega: <span>{{vino.bodega}}</span>
-            Añada: <span>{{vinos.0.value}}</span>
-            Precio: <span>{{vino.precio}}</span>€
-          </div>
-          <cross-delete id_wine={{vino.__firebaseKey__}}></cross-delete>
-      </paper-material>-->
     </template>
-  <script>
-    Polymer({
 
-      is:'wine-item',
+    <script>
+        Polymer({
 
-      properties:{
-        url:String,
-      },
+            is: 'wine-item',
 
-      ready: function()
-      {
-        this.async(function () {
-          this.url="https://vinos.firebaseio.com/lista_vinos/"+this.id_wine;
-        }, 50);
-      },
+            properties: {
+                url: String
+            },
 
-      log: function(msg)
-      {
-        console.log(msg)
-      }
+            ready: function () {
+                this.async(function () {
+                    this.url = "https://vinos.firebaseio.com/lista_vinos/" + this.id_wine;
+                    var ref = new Firebase(this.url);
 
+                    ref.once("value", function (snapshot)
+                    {
+                        document.querySelector('#heading').setAttribute("heading", snapshot.child("nombre").val());
 
-    });
-  </script>
+                        document.querySelector('#tipo').innerHTML = snapshot.child("tipo").val();
+                        document.querySelector('#bodega').innerHTML = snapshot.child("bodega").val();
+                        document.querySelector('#añada').innerHTML = snapshot.child("añada").val();
+                        document.querySelector('#precio').innerHTML = snapshot.child("precio").val();
+                        document.querySelector('#img').setAttribute("src", snapshot.child("img").val());
+
+                    });
+                }, 50);
+            },
+
+            deleteWine: function()
+            {
+                //alert(this.$.id_wine);
+                var vino = new Firebase('https://vinos.firebaseio.com/lista_vinos/'+this.id_wine);
+                vino.remove();
+                document.location.href="/vinos";
+            }
+
+          });
+    </script>
 </dom-module>

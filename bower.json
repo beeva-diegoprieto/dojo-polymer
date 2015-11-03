@@ -20,7 +20,8 @@
     "paper-input": "PolymerElements/paper-input#~1.0.16",
     "app-router": "~2.6.1",
     "paper-item": "PolymerElements/paper-item#~1.0.6",
-    "paper-radio-group": "PolymerElements/paper-radio-group#~1.0.6"
+    "paper-radio-group": "PolymerElements/paper-radio-group#~1.0.6",
+    "paper-card": "PolymerElements/paper-card#~1.0.7"
   },
   "devDependencies": {
     "web-component-tester": "*",
